@@ -129,7 +129,8 @@ Linux 或容器部署不需要这条 Windows 说明。
 执行结果：
 
 ```text
-27 passed, 1 warning in 0.48s
+28 unit tests passed, 1 warning
+18 E2E tests passed
 ```
 
 ## 结论
