@@ -1,0 +1,314 @@
+{
+  "schema_version": "2.0",
+  "artifact_type": "curated_mcp_operation_summary",
+  "provenance": {
+    "source_kind": "private_local_mcp_tool_transcript",
+    "contains_json_rpc_envelopes": false,
+    "source_hash_is_publicly_verifiable": false,
+    "source_trace_sha256": "03a7b24212168e40d3753c3b76febee99d7998c6c07955c5c6d927f4a0a5ada9",
+    "source_hash_note": "Local integrity marker for the withheld source trace; external readers cannot independently verify it. The source is withheld because full DolphinScheduler logs contain machine-local paths and addresses.",
+    "selection_note": "Events contain selected and sometimes normalized tool arguments/results, not raw JSON-RPC request or response envelopes.",
+    "redacted_or_omitted": [
+      "DolphinScheduler URL",
+      "host/address fields",
+      "machine-local paths",
+      "task rawScript and full log body"
+    ]
+  },
+  "tested_with": {
+    "dolphinscheduler": "3.4.2",
+    "dolphin_mcp_pilot": "0.3.0",
+    "mcp_protocol": "2024-11-05",
+    "mcp_server": {
+      "name": "DolphinScheduler",
+      "version": "1.29.0"
+    }
+  },
+  "run_identity": {
+    "project_name": "hermes_incident_recovery_1786711486",
+    "project_code": 181535832683296,
+    "workflow_code": 181535832737568,
+    "instance_id": 3
+  },
+  "events": [
+    {
+      "source_sequence": 5,
+      "tool": "ds_create_workflow",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "name": "nightly_dashboard_pipeline",
+        "auto_online": true,
+        "tasks": [
+          {
+            "name": "extract_dashboard_rows",
+            "taskType": "SHELL"
+          },
+          {
+            "name": "publish_dashboard",
+            "taskType": "SHELL"
+          }
+        ],
+        "relations": [
+          {
+            "preTaskName": "extract_dashboard_rows",
+            "postTaskName": "publish_dashboard"
+          }
+        ],
+        "redacted_fields": [
+          "tasks[].taskParams.rawScript"
+        ]
+      },
+      "selected_result": {
+        "success": true,
+        "project_name": "hermes_incident_recovery_1786711486",
+        "name": "nightly_dashboard_pipeline",
+        "workflow_code": 181535832737568,
+        "task_count": 2,
+        "release": "ONLINE"
+      },
+      "transformations": [
+        "tasks_json parsed and reduced to task names/types",
+        "relations_json parsed as an array",
+        "tasks[].taskParams.rawScript omitted"
+      ]
+    },
+    {
+      "source_sequence": 6,
+      "tool": "ds_run_workflow",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568
+      },
+      "selected_result": {
+        "status": "submitted",
+        "workflow_code": 181535832737568,
+        "hint": "Workflow triggered. Track progress with ds_list_task_instances(project_name=..., process_instance_id=<id>) to see individual task states (RUNNING/SUCCESS/FAILURE). An instance showing RUNNING_EXECUTION with an empty task list is normal (DS is initializing the DAG). First get the instance id with ds_list_process_instances(workflow_code=...)."
+      }
+    },
+    {
+      "source_sequence": 7,
+      "tool": "ds_list_process_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568,
+        "page_size": 10
+      },
+      "selected_result": [
+        {
+          "id": 3,
+          "name": "nightly_dashboard_pipeline-20260814214446749",
+          "processDefinitionCode": 181535832737568,
+          "state": "SUBMITTED_SUCCESS",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": null,
+          "runTimes": 1,
+          "scheduleTime": null
+        }
+      ]
+    },
+    {
+      "source_sequence": 8,
+      "tool": "ds_list_process_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568,
+        "page_size": 10
+      },
+      "selected_result": [
+        {
+          "id": 3,
+          "name": "nightly_dashboard_pipeline-20260814214446749",
+          "processDefinitionCode": 181535832737568,
+          "state": "FAILURE",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": "2026-08-14 21:44:47",
+          "runTimes": 1,
+          "scheduleTime": null
+        }
+      ]
+    },
+    {
+      "source_sequence": 9,
+      "tool": "ds_list_task_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "process_instance_id": 3,
+        "include_full": false
+      },
+      "selected_result": [
+        {
+          "id": 6,
+          "name": "publish_dashboard",
+          "taskType": "SHELL",
+          "state": "FAILURE",
+          "startTime": "2026-08-14 21:44:47",
+          "endTime": "2026-08-14 21:44:47",
+          "retryTimes": 0,
+          "maxRetryTimes": 0
+        },
+        {
+          "id": 5,
+          "name": "extract_dashboard_rows",
+          "taskType": "SHELL",
+          "state": "SUCCESS",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": "2026-08-14 21:44:46",
+          "retryTimes": 0,
+          "maxRetryTimes": 0
+        }
+      ]
+    },
+    {
+      "source_sequence": 10,
+      "tool": "ds_get_latest_failure_log",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568,
+        "log_limit": 120
+      },
+      "selected_result": {
+        "workflow_code": 181535832737568,
+        "instance_id": 3,
+        "instance_name": "nightly_dashboard_pipeline-20260814214446749",
+        "instance_state": "FAILURE",
+        "start_time": "2026-08-14 21:44:46",
+        "end_time": "2026-08-14 21:44:47",
+        "failed_task_count": 1,
+        "failed_tasks": [
+          {
+            "task_instance_id": 6,
+            "task_name": "publish_dashboard",
+            "task_type": "SHELL",
+            "state": "FAILURE",
+            "start_time": "2026-08-14 21:44:47",
+            "end_time": "2026-08-14 21:44:47",
+            "log_tail": "[REDACTED: full log omitted]",
+            "log_fetch_error": null
+          }
+        ]
+      },
+      "redacted_fields": [
+        "selected_result.failed_tasks[].log_tail"
+      ],
+      "derived_log_assertions": {
+        "exit_status_code": 42,
+        "log_markers": [
+          "PUBLISH_RUN_COUNT=1",
+          "INCIDENT_CODE=TEMPORARY_PUBLISH_GATE"
+        ],
+        "log_excerpts": [
+          {
+            "timestamp": "2026-08-14 21:44:47.419",
+            "message": "PUBLISH_RUN_COUNT=1"
+          },
+          {
+            "timestamp": "2026-08-14 21:44:47.419",
+            "message": "INCIDENT_CODE=TEMPORARY_PUBLISH_GATE"
+          }
+        ]
+      }
+    },
+    {
+      "source_sequence": 11,
+      "tool": "ds_rerun_from_failure",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "process_instance_id": 3
+      },
+      "selected_result": {
+        "process_instance_id": 3,
+        "executeType": "START_FAILURE_TASK_PROCESS",
+        "status": "submitted"
+      }
+    },
+    {
+      "source_sequence": 12,
+      "tool": "ds_list_process_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568,
+        "page_size": 10
+      },
+      "selected_result": [
+        {
+          "id": 3,
+          "name": "nightly_dashboard_pipeline-20260814214446749",
+          "processDefinitionCode": 181535832737568,
+          "state": "SUBMITTED_SUCCESS",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": null,
+          "runTimes": 2,
+          "scheduleTime": null
+        }
+      ]
+    },
+    {
+      "source_sequence": 13,
+      "tool": "ds_list_process_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "workflow_code": 181535832737568,
+        "page_size": 10
+      },
+      "selected_result": [
+        {
+          "id": 3,
+          "name": "nightly_dashboard_pipeline-20260814214446749",
+          "processDefinitionCode": 181535832737568,
+          "state": "SUCCESS",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": "2026-08-14 21:44:50",
+          "runTimes": 2,
+          "scheduleTime": null
+        }
+      ]
+    },
+    {
+      "source_sequence": 14,
+      "tool": "ds_list_task_instances",
+      "selected_arguments": {
+        "project_name": "hermes_incident_recovery_1786711486",
+        "process_instance_id": 3,
+        "include_full": false
+      },
+      "selected_result": [
+        {
+          "id": 7,
+          "name": "publish_dashboard",
+          "taskType": "SHELL",
+          "state": "SUCCESS",
+          "startTime": "2026-08-14 21:44:49",
+          "endTime": "2026-08-14 21:44:50",
+          "retryTimes": 0,
+          "maxRetryTimes": 0
+        },
+        {
+          "id": 5,
+          "name": "extract_dashboard_rows",
+          "taskType": "SHELL",
+          "state": "SUCCESS",
+          "startTime": "2026-08-14 21:44:46",
+          "endTime": "2026-08-14 21:44:46",
+          "retryTimes": 0,
+          "maxRetryTimes": 0
+        }
+      ]
+    }
+  ],
+  "derived_checks": {
+    "state_transition": [
+      "FAILURE",
+      "SUCCESS"
+    ],
+    "same_process_instance": true,
+    "predecessor_task_attempt_ids": [
+      5
+    ],
+    "predecessor_task_id_unchanged": true,
+    "failed_task_attempt_ids": [
+      6,
+      7
+    ],
+    "targeted_rerun_proved": true
+  }
+}
